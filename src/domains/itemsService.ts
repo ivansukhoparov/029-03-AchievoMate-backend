@@ -22,7 +22,7 @@ export class ItemsService {
         const updateListData: CreateListItemType = {
             itemId: newItemId.toString(),
             itemName: createData.name,
-            itemStatus: "UNDONE"
+            itemStatus: "ACTIVE"
         }
 
         // push new object to list.items array, and return false if update is wrong

@@ -1,6 +1,6 @@
 export type UpdateItemType = {
     name?: string
-    status?: "ACTIVE" | "DONE" | "DELETE"
+    status?: "ACTIVE" | "DELETE"
     newDate?: string
 }
 
