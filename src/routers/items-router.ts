@@ -2,7 +2,7 @@ import express, {Request, Response} from "express";
 import {CreateItemType} from "../types/items/input";
 import {RequestWithBody} from "../types/common";
 import {HTTP_STATUSES} from "../utils/common";
-import {ItemsService} from "../domains/itemsService";
+import {ItemsService} from "../domains/items-service";
 
 
 export const itemsRouter = express.Router();
