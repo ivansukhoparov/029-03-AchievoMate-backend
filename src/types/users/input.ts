@@ -16,7 +16,7 @@ export type CreateUserListType = {
 }
 
 export type CreateUserType = {
-    name: string
+    name?: string
     login: string
     password: string
     email: string

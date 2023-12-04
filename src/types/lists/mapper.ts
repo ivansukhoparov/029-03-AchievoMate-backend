@@ -1,4 +1,4 @@
-import {WithId, WithoutId} from "mongodb";
+import {WithId} from "mongodb";
 import {ListType, OutputListType} from "./output";
 
 export const listMapper= (input:WithId<ListType>):OutputListType=>{
