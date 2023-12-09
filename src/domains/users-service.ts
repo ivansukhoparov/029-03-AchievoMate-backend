@@ -1,27 +1,31 @@
 import {CreateUserType} from "../types/users/input";
 import {OutputUserType, UserType} from "../types/users/output";
 import {UsersRepository} from "../repository/users-repository";
+import bcrypt from "bcrypt"
+import {UsersQueryRepository} from "../repository/users-query-repository";
 
+export class UsersService{
+    static async createUser(createUserData:CreateUserType){
 
-class UsersService{
-    static async createUser(createData:CreateUserType){
-
-        const isExist = await UsersRepository.getUserByLogin(createData.login)
+        const isExist = await UsersRepository.getUserByLoginOrEmail(createUserData.login,createUserData.email)
         if (isExist) return new Error("Login is already exist")
 
-        let userName = createData.login;
-        if (createData.name) userName=createData.name
+        let userName = createUserData.login;
+        if (createUserData.name) userName=createUserData.name
+
+        const hash = await bcrypt.hash(createUserData.password, 10);
 
         const newUser:UserType={
             name: userName,
-            login: createData.login,
-            password: createData.password,
-            email: createData.email,
+            login: createUserData.login,
+            email: createUserData.email,
+            hash:hash,
+            deleted:false,
             lists: []
         }
 
         const createdUserId = await UsersRepository.addNewUser(newUser);
-        const createdUser:OutputUserType|null = await UsersRepository.getUserById(createdUserId);
+        const createdUser:OutputUserType|null = await UsersQueryRepository.getUserById(createdUserId);
 
         if (!createdUser) return null
 
