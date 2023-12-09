@@ -5,16 +5,17 @@ export type OutputListType = {
     items: Array<{
         itemId: string
         itemName: string
-        itemStatus: "UNDONE"|"DONE"|"DELETE"
+        itemStatus: "ACTIVE" | "DELETE"
     }>
 }
 
 export type ListType = {
     userId:string
     name:string
+    deleted: boolean
     items: Array<{
         itemId: string
         itemName: string
-        itemStatus: "UNDONE"|"DONE"|"DELETE"
+        itemStatus: "ACTIVE" | "DELETE"
     }>
 }
