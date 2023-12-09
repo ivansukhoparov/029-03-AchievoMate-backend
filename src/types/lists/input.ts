@@ -3,7 +3,7 @@ export type UpdateListType={
     items?:Array<{
         itemId?: string
         itemName?: string
-        itemStatus?: "ACTIVE"|"DONE"|"DELETE"
+        itemStatus?: "ACTIVE" | "DELETE"
     }>
 }
 export type CreateListType={
@@ -15,5 +15,5 @@ export type CreateListType={
 export type CreateListItemType = {
     itemId: string
     itemName: string
-    itemStatus: "ACTIVE"|"DONE"|"DELETE"
+    itemStatus: "ACTIVE" | "DELETE"
 }
