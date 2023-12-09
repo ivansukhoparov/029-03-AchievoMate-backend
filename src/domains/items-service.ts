@@ -12,7 +12,7 @@ export class ItemsService {
         // create object with new item
         const newItem: ItemType = {
             name: createData.name,
-            status: "UNDONE",
+            status: "ACTIVE",
             dates: []
         }
         // add new item to DB and get id of new item
