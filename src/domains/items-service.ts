@@ -7,11 +7,12 @@ import {listMapper} from "../types/lists/mapper";
 
 
 export class ItemsService {
-    static async createNewItem(listId: string, createData: CreateItemType) {
+    static async createNewItem(createData: CreateItemType) {
 
         // create object with new item
         const newItem: ItemType = {
             name: createData.name,
+            listId:createData.listId,
             status: "ACTIVE",
             dates: []
         }
@@ -26,12 +27,12 @@ export class ItemsService {
         }
 
         // push new object to list.items array, and return false if update is wrong
-        const isUpdated = await ListsRepository.addNewItemToList(listId, updateListData)
+        const isUpdated = await ListsRepository.addNewItemToList(createData.listId, updateListData)
         if (!isUpdated) return null
 
         // get updated list, return false if operation is wrong and mapped updated list if success
-        const updatedList = await ListsRepository.getListById(listId);
+        const updatedList = await ListsRepository.getListById(createData.listId);
         if (!updatedList) return null
-        return listMapper(updatedList);
+        return updatedList;
     }
 }
