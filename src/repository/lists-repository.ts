@@ -3,6 +3,7 @@ import {listsCollection} from "../db/db-collections";
 import {listRouter} from "../routers/list-router";
 import {ListType} from "../types/lists/output";
 import {listMapper} from "../types/lists/mapper";
+import {ObjectId} from "mongodb";
 
 export class ListsRepository {
 
@@ -17,8 +18,14 @@ export class ListsRepository {
         }
     }
     static async getListById(listId: string) {
-        const list = await listsCollection.findOne({_id: new Object(listId)});
-        return list;
+       try {
+            const list = await listsCollection.findOne({_id: new ObjectId(listId)});
+            if (!list) return null;
+            return listMapper(list);
+        }catch (err){
+           return null;
+       }
+
     }
 
     // ADD SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -35,7 +42,7 @@ export class ListsRepository {
     // UPDATE SECTION ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static async addNewItemToList(listId: string, itemData: CreateListItemType) {
         const result = await listsCollection.updateOne(
-            {_id: new Object(listId)},
+            {_id: new ObjectId(listId)},
             {
                 $push: {items: itemData}
             });
