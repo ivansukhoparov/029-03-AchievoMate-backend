@@ -7,9 +7,6 @@ import {UsersQueryRepository} from "../repository/users-query-repository";
 export class UsersService{
     static async createUser(createUserData:CreateUserType){
 
-        const isExist = await UsersRepository.getUserByLoginOrEmail(createUserData.login,createUserData.email)
-        if (isExist) return new Error("Login is already exist")
-
         let userName = createUserData.login;
         if (createUserData.name) userName=createUserData.name
 

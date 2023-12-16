@@ -18,6 +18,7 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 })
 
 usersRouter.post("/", async (req:RequestWithBody<CreateUserType>, res:Response)=>{
+    // добавить валидацию на существующего юзера
     const newUser = await UsersService.createUser(req.body);
     if (!newUser) res.status(HTTP_STATUSES.BAD_REQUEST_400);
     else res.status(HTTP_STATUSES.CREATED_201).json(newUser);

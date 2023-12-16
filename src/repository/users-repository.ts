@@ -20,12 +20,19 @@ export class UsersRepository {
         return userMapperWithHash(user)
     }
 
-    static async getUserByLoginOrEmail(login: string, email: string) {
+    static async getUserByEmail(userEmail:string){
+        const user = await usersCollection.findOne({email:userEmail});
+        if (!user) return null
+        return userMapperWithHash(user)
+    }
+
+
+    static async getUserByLoginOrEmail(loginOrEmail: string) {
         try {
             const user = await usersCollection.findOne({
                 $or: [
-                    {login: login},
-                    {email: email}
+                    {login: loginOrEmail},
+                    {email: loginOrEmail}
                 ]
             });
             if (!user) return null;
@@ -35,12 +42,14 @@ export class UsersRepository {
         }
     }
 
+
+
     // ADD SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
     static async addNewUser(newUser:UserType){
     const result =  await usersCollection.insertOne(newUser);
-    return result.insertedId.toString();
-}
+        return result.insertedId.toString();
+    }
 
 
     // UPDATE SECTION ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

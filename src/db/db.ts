@@ -1,7 +1,7 @@
 import {MongoClient} from "mongodb";
 import 'dotenv/config'
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
+const mongoUrl = process.env.MONGO_URL!
 
 export const client = new MongoClient(mongoUrl);
 
