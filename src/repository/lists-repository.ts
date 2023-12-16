@@ -2,11 +2,20 @@ import {CreateListItemType, CreateListType} from "../types/lists/input";
 import {listsCollection} from "../db/db-collections";
 import {listRouter} from "../routers/list-router";
 import {ListType} from "../types/lists/output";
+import {listMapper} from "../types/lists/mapper";
 
 export class ListsRepository {
 
 
     // GET SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    static async getListsByUserId(userId:string){
+        try {
+            const lists = await listsCollection.find({userId:userId}).toArray()
+            return lists.map(listMapper)
+        }catch (err){
+            return null
+        }
+    }
     static async getListById(listId: string) {
         const list = await listsCollection.findOne({_id: new Object(listId)});
         return list;

@@ -5,14 +5,22 @@ import {ItemsService} from "../domains/items-service";
 import {authMiddleware} from "../middlewares/auth-middleware";
 import {RequestWithBody} from "../types/common";
 import {ListService} from "../domains/list-service";
+import {ListsRepository} from "../repository/lists-repository";
 
 
 export const listRouter = express.Router();
 
-listRouter.get("/", (req: Request, res: Response) => {
-    res.json({msg: "lists"})
+// GET request - return lists array for authorized user
+listRouter.get("/",authMiddleware, async (req: Request, res: Response) => {
+    const lists = await ListsRepository.getListsByUserId(req.user.id);
+    if (!lists){
+    res.sendStatus(HTTP_STATUSES.SEVER_ERROR_500);
+    return;
+    }
+    res.status(HTTP_STATUSES.OK_200).json(lists);
 })
 
+// POST request - create new list for authored user
 listRouter.post("/", authMiddleware, async (req: RequestWithBody<any>, res: Response) => {
 
     const updatedUser = await ListService.createNewList(req.user.id, req.body.name);
@@ -22,6 +30,13 @@ listRouter.post("/", authMiddleware, async (req: RequestWithBody<any>, res: Resp
     }
     res.status(HTTP_STATUSES.OK_200).json(updatedUser);
 })
+
+// POST request - add new item to list by list id
+listRouter.post("/:id/items", authMiddleware, async (req:RequestWithBody<any>, res:Response)=>{
+
+})
+
+
 
 listRouter.post("/:id/lists", async (req: Request, res: Response) => {
     const listId = req.params.listId;
