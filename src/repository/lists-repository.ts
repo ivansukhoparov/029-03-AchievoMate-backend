@@ -1,5 +1,7 @@
-import {CreateListItemType} from "../types/lists/input";
+import {CreateListItemType, CreateListType} from "../types/lists/input";
 import {listsCollection} from "../db/db-collections";
+import {listRouter} from "../routers/list-router";
+import {ListType} from "../types/lists/output";
 
 export class ListsRepository {
 
@@ -12,6 +14,14 @@ export class ListsRepository {
 
     // ADD SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+    static async createNewList(createData:ListType){
+        try {
+            const newListId = await listsCollection.insertOne(createData);
+            return newListId.insertedId.toString()
+        }catch (err){
+            return null;
+        }
+    }
 
     // UPDATE SECTION ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     static async addNewItemToList(listId: string, itemData: CreateListItemType) {

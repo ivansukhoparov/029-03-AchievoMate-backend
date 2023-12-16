@@ -2,6 +2,7 @@ import {UserType, UserTypeWithId} from "../types/users/output";
 import {usersCollection} from "../db/db-collections";
 import {userMapperWithHash} from "../types/users/mapper";
 import {ObjectId} from "mongodb";
+import {UpdateUserListType} from "../types/users/input";
 
 
 export class UsersRepository {
@@ -14,20 +15,16 @@ export class UsersRepository {
     if (!user) return null
         return userMapperWithHash(user)
 }
-
     static async getUserByLogin(userLogin:string){
         const user = await usersCollection.findOne({login:userLogin});
         if (!user) return null
         return userMapperWithHash(user)
     }
-
     static async getUserByEmail(userEmail:string){
         const user = await usersCollection.findOne({email:userEmail});
         if (!user) return null
         return userMapperWithHash(user)
     }
-
-
     static async getUserByLoginOrEmail(loginOrEmail: string) {
         try {
             const user = await usersCollection.findOne({
@@ -44,7 +41,6 @@ export class UsersRepository {
     }
 
 
-
     // ADD SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
     static async addNewUser(newUser:UserType){
@@ -58,7 +54,17 @@ export class UsersRepository {
 
 
     // UPDATE SECTION ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
+    static async addNewListToUser(userId: string, newList: UpdateUserListType) {
+        try {
+            const isUpdated = await usersCollection.updateOne(
+                {_id: new ObjectId(userId)},
+                {$push: {lists: newList}}
+            );
+            return !!isUpdated
+        }catch (err){
+            return false
+        }
+    }
 
 
     //DELETE SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -9,5 +9,5 @@ app.use(express.json())
 
 app.use("/auth", authRouter );
 app.use("/users", usersRouter);
-
+app.use("/lists", listRouter);
 
