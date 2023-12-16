@@ -17,7 +17,6 @@ export const userMapperWithHash = (user: WithId<UserType>): UserTypeWithId => {
         name: user.name,
         login: user.login,
         email: user.email,
-        deleted:user.deleted,
         hash:user.hash,
         lists: user.lists
     }

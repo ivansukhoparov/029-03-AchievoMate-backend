@@ -10,11 +10,6 @@ export type UpdateUserListType = {
     listName: string
 }
 
-export type CreateUserListType = {
-    listId: string
-    listName: string
-}
-
 export type CreateUserType = {
     name?: string
     login: string

@@ -14,7 +14,6 @@ export type UserType = {
     login: string
     email: string
     hash: string
-    deleted: boolean
     lists: Array<{
         listId: string
         listName: string
@@ -27,7 +26,6 @@ export type UserTypeWithId = {
     login: string
     email: string
     hash: string
-    deleted: boolean
     lists: Array<{
         listId: string
         listName: string

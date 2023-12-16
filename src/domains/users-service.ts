@@ -17,7 +17,6 @@ export class UsersService{
             login: createUserData.login,
             email: createUserData.email,
             hash:hash,
-            deleted:false,
             lists: []
         }
         const createdUserId = await UsersRepository.addNewUser(newUser);

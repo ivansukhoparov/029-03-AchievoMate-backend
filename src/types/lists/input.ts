@@ -7,7 +7,6 @@ export type UpdateListType={
     }>
 }
 export type CreateListType={
-    id: string
     userId:string
     name:string
 }

@@ -12,7 +12,6 @@ export type OutputListType = {
 export type ListType = {
     userId:string
     name:string
-    deleted: boolean
     items: Array<{
         itemId: string
         itemName: string
