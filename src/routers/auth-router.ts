@@ -17,6 +17,3 @@ authRouter.post ("/login", async (req:RequestWithBody<AuthInputType>,res:Respons
     res.status(HTTP_STATUSES.OK_200).json(accessToken);
 })
 
-authRouter.get("/me", authMiddleware, async (req:Request,res:Response)=>{
-    res.status(HTTP_STATUSES.OK_200).json(req.user)
-})

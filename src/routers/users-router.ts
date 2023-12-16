@@ -4,6 +4,8 @@ import {CreateUserType} from "../types/users/input";
 import {UsersService} from "../domains/users-service";
 import {HTTP_STATUSES} from "../utils/common";
 import {UsersQueryRepository} from "../repository/users-query-repository";
+import {authMiddleware} from "../middlewares/auth-middleware";
+import {authRouter} from "./auth-router";
 
 
 export const usersRouter = express.Router();
@@ -22,4 +24,8 @@ usersRouter.post("/", async (req:RequestWithBody<CreateUserType>, res:Response)=
     const newUser = await UsersService.createUser(req.body);
     if (!newUser) res.status(HTTP_STATUSES.BAD_REQUEST_400);
     else res.status(HTTP_STATUSES.CREATED_201).json(newUser);
+})
+
+usersRouter.get("/me", authMiddleware, async (req:Request,res:Response)=>{
+    res.status(HTTP_STATUSES.OK_200).json(req.user)
 })
