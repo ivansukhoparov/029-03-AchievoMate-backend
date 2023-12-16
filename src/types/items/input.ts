@@ -5,7 +5,7 @@ export type UpdateItemType = {
 }
 
 export type CreateItemType = {
-    listId?: string
+    listId: string
     name: string
 }
 

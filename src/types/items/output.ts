@@ -1,12 +1,14 @@
 export type OutputItemType = {
     id: string
     name: string
-    status: "ACTIVE" | "DELETE"
+    listId: string
+    status: "ACTIVE" | "DONE"
     dates: Array<string>
 }
 
 export type ItemType = {
     name: string
-    status: "ACTIVE" | "DELETE"
+    listId: string
+    status: "ACTIVE" | "DONE"
     dates: Array<string>
 }
