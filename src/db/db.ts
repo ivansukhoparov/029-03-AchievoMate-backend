@@ -12,6 +12,7 @@ export const runDb = async () => {
         console.log("Mongo server connection successful")
         console.log(`Mongo server ${mongoUrl}`)
     } catch {
+        await client.close()
         console.log("Mongo server connection failed")
     }
 }
