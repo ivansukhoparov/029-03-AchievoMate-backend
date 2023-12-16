@@ -1,6 +1,7 @@
 import {UserType, UserTypeWithId} from "../types/users/output";
 import {usersCollection} from "../db/db-collections";
 import {userMapperWithHash} from "../types/users/mapper";
+import {ObjectId} from "mongodb";
 
 
 export class UsersRepository {
@@ -9,7 +10,7 @@ export class UsersRepository {
     // GET SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
     static async getUserById(userId: string): Promise<UserTypeWithId | null> {
-    const user = await usersCollection.findOne({_id:new Object(userId)});
+    const user = await usersCollection.findOne({_id:new ObjectId(userId)});
     if (!user) return null
         return userMapperWithHash(user)
 }
@@ -47,8 +48,12 @@ export class UsersRepository {
     // ADD SECTION |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
     static async addNewUser(newUser:UserType){
-    const result =  await usersCollection.insertOne(newUser);
-        return result.insertedId.toString();
+        try{
+            const result =  await usersCollection.insertOne(newUser);
+            return result.insertedId.toString();
+        }catch (err){
+            return null
+        }
     }
 
 
